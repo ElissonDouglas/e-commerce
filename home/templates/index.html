@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+{% load static %}
+{% load mathfilters %}
+{% block content %}
+
+<link rel="stylesheet" href="{% static 'css/index.css' %}">
+
+    <div class="carrossel">
+        <div class="container-slide" id="img">
+            <img src="{% static 'images/imagem1.jpg' %}" alt="Imagem 1" >
+            <img src="{% static 'images/imagem2.jpg' %}" alt="Imagem 2" >
+            <img src="{% static 'images/imagem3.jpg' %}" alt="Imagem 3" >
+        </div>
+    </div>
+
+
+    <div class="container">
+        <h1>Produtos adicionados recentemente</h1>
+        <div class="cards">
+            {% for produto in produtos %}
+                <div class="card" onclick="produtoPage({{ produto.id }})">
+                    <img src="{{ produto.imagem.url }}" alt="{{ produto.nome }}">
+                    <p id="produto_nome">{{ produto.nome }}</p>
+                    <p id="produto_preco">R$ {{ produto.preco }}</p>
+                    <p id="promocao">10x de R$ {{ produto.preco|div:10|sub:1 }} sem juros</p>
+                    <input type="hidden" name="produto_id" id="produto_id" value="{{ produto.id }}">
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+
+    <div class="container">
+        <h1>Informática</h1>
+        <div class="cards">
+            {% for produto in informatica %}
+                <div class="card" onclick="produtoPage({{ produto.id }})">
+                    <img src="{{ produto.imagem.url }}" alt="{{ produto.nome }}">
+                    <p id="produto_nome">{{ produto.nome }}</p>
+                    <p id="produto_preco">R$ {{ produto.preco }}</p>
+                    <p id="promocao">10x de R$ {{ produto.preco|div:10|sub:1 }} sem juros</p>
+                    <input type="hidden" name="produto_id" id="produto_id" value="{{ produto.id }}">
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+<script src="{% static 'js/redirect.js' %}"></script>
+<script src="{% static 'js/slide-show.js' %}"></script>
+{% endblock content %}

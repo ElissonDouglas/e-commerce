@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% load static %}
+{% load mathfilters %}
+{% block content %}
+
+<link rel="stylesheet" href="{% static 'css/index.css' %}">
+
+
+<div class="container">
+    <h1>Produtos da categoria: {{ categoria.nome }}</h1>
+    <div class="cards">
+        {% for produto in produtos %}
+            <div class="card" onclick="produtoPage({{ produto.id }})">
+                <img src="{{ produto.imagem.url }}" alt="{{ produto.nome }}">
+                <p id="produto_nome">{{ produto.nome }}</p>
+                <p id="produto_preco">R$ {{ produto.preco }}</p>
+                <p id="promocao">10x de R$ {{ produto.preco|div:10|sub:1 }} sem juros</p>
+                <input type="hidden" name="produto_id" id="produto_id" value="{{ produto.id }}">
+            </div>
+        {% endfor %}
+    </div>
+</div>
+
+
+{% endblock content %}

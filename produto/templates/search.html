@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% load static %}
+{% load mathfilters %}
+{% block content %}
+<link rel="stylesheet" href="{% static 'css/index.css' %}">
+<link rel="stylesheet" href="{% static 'css/produto.css' %}">
+
+        {% if produtos_pesquisa %}
+        <h1>Produtos relacionados com: "{{ pesquisa }}"</h1>
+
+        <div class="cards">
+        
+            {% for produto in produtos_pesquisa %}
+                <div class="card" onclick="produtoPage({{ produto.id }})">
+                    <img src="{{ produto.imagem.url }}" alt="{{ produto.nome }}">
+                    <p id="produto_nome">{{ produto.nome }}</p>
+                    <p id="produto_preco">R$ {{ produto.preco }}</p>
+                    <p id="promocao">10x de R$ {{ produto.preco|div:10|sub:5 }} sem juros</p>
+                    <input type="hidden" name="produto_id" id="produto_id" value="{{ produto.id }}">
+                </div>
+            {% endfor %}
+        {% else %}
+            <h1>Não encontramos nenhum produto :(</h1>
+        {% endif %}
+        
+    </div>
+{% endblock content %}

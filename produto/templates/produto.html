@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+{% load static %}
+{% load mathfilters %}
+{% block content %}
+<link rel="stylesheet" href="{% static 'css/produto.css' %}">
+<link rel="stylesheet" href="{% static 'css/index.css' %}">
+    <div class="container">
+        <img src="{{ produto.imagem.url }}" alt="{{ produto.nome }}">
+        <div class="infos">
+            <h1>{{ produto.nome }}</h1>
+            <h2>R$ {{ produto.preco }}</h2>
+            <p id="promocao">10x de R$ {{ produto.preco|div:10|sub:5 }} sem juros</p>
+            <p id="frete">Frete grátis</p>
+            <p>Qntd. estoque: {{ produto.estoque }} unidades</p>
+            <p>{{ produto.descricao }}</p> 
+        </div>
+    </div>
+
+    <div class="related">
+        <h1>Produtos relacionados</h1>
+        {% for prod in produtos_filtrado %}
+        <div class="cards">
+            <div class="card" onclick="produtoPage({{ prod.id }})">
+                <img src="{{ prod.imagem.url }}" alt="{{ prod.nome }}">
+                <p id="prod_nome">{{ prod.nome }}</p>
+                <p id="prod_preco">R$ {{ prod.preco }}</p>
+                <p id="promocao">10x de R$ {{ prod.preco|div:10|sub:5 }} sem juros</p>
+                <input type="hidden" name="prod_id" id="prod_id" value="{{ prod.id }}">
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+<script src="{% static 'js/redirect.js' %}"></script>
+{% endblock content %}
