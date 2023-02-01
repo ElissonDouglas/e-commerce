@@ -26,10 +26,11 @@
 
             <div id="second">
                 {% if user.is_anonymous %}
-                    <button onclick="logar()">Entrar</button>
-                    <button onclick="registrar()">Registrar-se</button>
+                    <button onclick="redirect('login')">Entrar</button>
+                    <button onclick="redirect('cadastro')">Registrar-se</button>
                 {% else %}
-                    <button onclick="sair()">Sair</button>
+                    <button onclick="redirect('carrinho')"><i class="fa-solid fa-cart-shopping"></i> Meu carrinho</button>
+                    <button onclick="redirect('logout')">Sair</button>
                 {% endif %}
             </div>
         </div>

@@ -12,11 +12,11 @@ def register(request):
         email = request.POST.get('email')
         password = request.POST.get('password')
     
-        try:
+        try: # Checando se o usuário existe no banco de dados
             user = User.objects.get(username=username)
             messages.error(request, 'Usuário já está sendo utilizado.')
             return render(request, 'cadastro.html', {})
-        except User.DoesNotExist:
+        except User.DoesNotExist: # Adicionando o usuário ao banco de dados.
             new_user = User.objects.create_user(username=username, email=email, password=password, last_name=last_name, first_name=first_name)
             
             return redirect('login')
@@ -31,7 +31,7 @@ def loginview(request):
 
         user = authenticate(request, username=username, password=password)
         
-        if user is not None:
+        if user is not None: # Checando se as credenciais estão certas e autenticando o usuário.
             login(request, user)
             return redirect('index')
         else:

@@ -3,6 +3,7 @@
 {% block content %}
 <link rel="stylesheet" href="{% static 'css/index.css' %}">
 <link rel="stylesheet" href="{% static 'css/carrinho.css' %}">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" integrity="sha512-MV7K8+y+gLIBoVD59lQIYicR65iaqukzvf/nwasF0nqhPay5w/9lJmVM2hMDcnK1OnMGCdVK+iQrJ7lzPJQd1w==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
     <h1>Total do seu carrinho: R$ {{ carrinho.total }}</h1>
     <div class="cards">
@@ -12,6 +13,7 @@
                 <p id="produto_nome">{{ item.produto.nome }}</p>
                 <p id="produto_preco">R$ {{ item.produto.preco }}</p>
                 <p>Quantidade: {{ item.quantidade }}</p>
+                <a href="{% url 'deleteitem' item.produto.id %}" id="delete-button">Deletar produto</a>
                 <input type="hidden" name="produto_id" id="produto_id" value="{{ item.produto.id }}">
             </div>
         {% endfor %}

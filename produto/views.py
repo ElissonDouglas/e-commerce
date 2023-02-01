@@ -1,9 +1,9 @@
 from django.views.generic import TemplateView
+from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, get_object_or_404, redirect
-from django.urls import reverse
 from .models import Produto, CategoriaProduto, Carrinho, ItemCarrinho
 
-from django.contrib import messages
+
 from decimal import Decimal
 
 def produtoview(request, pk):
@@ -44,6 +44,7 @@ def categoriaview(request, pk):
     return render(request, 'categoria.html', {'produtos': produtos_categoria, 'categoria': categoria,})
 
 
+@login_required
 def carrinhoview(request):
     if request.method == 'POST':
         user = request.user
@@ -61,7 +62,7 @@ def carrinhoview(request):
             carrinho, created = Carrinho.objects.get_or_create(usuario=user)
         
             carrinho.adicionar_produto(produto=produto, quantidade=quantidade, preco=preco, total=total)
-            print('ADICIONADO -------------------')
+            
             # Redirecionando o usuário para o carrinho.
             return redirect('carrinho')  
     else:
@@ -80,3 +81,12 @@ def carrinhoview(request):
         }
         return render(request, 'carrinho.html', context)
     
+  
+def deleteitem(request, produto_id):
+    item_carrinho = ItemCarrinho.objects.get(produto=produto_id)
+    carrinho = Carrinho.objects.get(id=item_carrinho.carrinho_id)
+    carrinho.total -= item_carrinho.preco * item_carrinho.quantidade
+    carrinho.save()
+    item_carrinho.delete()
+    return redirect('carrinho')
+  

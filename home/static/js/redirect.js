@@ -8,16 +8,20 @@ document.querySelector('form').addEventListener('submit', function(e) {
     window.location.href = '/get/?search-bar=' + pesquisa;
 });
 
-function sair() {
-    window.location.href = '/logout/'
+function redirect(url) {
+    window.location.href = '/' + url + '/';
 }
 
-function logar() {
+/*function logar() {
     window.location.href = '/login/'
 }
 
 function registrar() {
     window.location.href = '/cadastro/'
 }
+
+function verCarrinho() {
+
+}*/
 
 

@@ -23,4 +23,6 @@ class ProdutoView(TemplateView):
     template_name = 'produto.html'
     
     
-
+class Error404View(TemplateView):
+    template_name = '404.html'
+    
