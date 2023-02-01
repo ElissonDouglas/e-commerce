@@ -19,8 +19,16 @@
             <p>{{ produto.descricao }}</p> 
 
             {% if user.is_authenticated %}
-                <p id="carrinho"><i class="fa-solid fa-cart-plus"></i> Adicionar ao carrinho</p>
-                <input type="hidden" name="produto_carrinho" value="{{ produto.id }}">
+                <form action="{% url 'carrinho' %}" method="post">
+                    {% csrf_token %}
+                    <label for="quantidade">Quantidade</label>
+                    <input type="number" name="quantidade" id="quantidade" min="1" value="1">
+                    
+                    <input type="hidden" name="produto_carrinho" id="produto_carrinho" value="{{ produto.id }}">
+                    <input type="hidden" name="produto_preco" id="produto_preco" value="{{ produto.preco }}">
+
+                    <button type="submit"><i class="fa-solid fa-cart-plus"></i> Adicionar ao carrinho</button>
+                </form>
             {% endif %}
         </div>
     </div>

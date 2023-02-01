@@ -1,8 +1,10 @@
 from django.views.generic import TemplateView
 from django.shortcuts import render, get_object_or_404, redirect
 from django.urls import reverse
-from .models import Produto, CategoriaProduto
+from .models import Produto, CategoriaProduto, Carrinho, ItemCarrinho
 
+from django.contrib import messages
+from decimal import Decimal
 
 def produtoview(request, pk):
     prod = get_object_or_404(Produto, id=pk)
@@ -40,5 +42,41 @@ def categoriaview(request, pk):
     produtos_categoria = Produto.objects.filter(categoria=categoria.id)
     
     return render(request, 'categoria.html', {'produtos': produtos_categoria, 'categoria': categoria,})
-    
+
+
+def carrinhoview(request):
+    if request.method == 'POST':
+        user = request.user
+        produto = int(request.POST.get('produto_carrinho'))
+        quantidade = int(request.POST.get('quantidade'))
+        preco = Decimal(request.POST.get('produto_preco').replace(',', '.'))
+        total = Decimal(preco * quantidade)
+        
+        
+        try:
+            item = ItemCarrinho.objects.get(produto=produto)
+            return redirect('carrinho')
+        except ItemCarrinho.DoesNotExist:
+            # Criando carrinho/Acessando carrinho existente e adicionando o produto.
+            carrinho, created = Carrinho.objects.get_or_create(usuario=user)
+        
+            carrinho.adicionar_produto(produto=produto, quantidade=quantidade, preco=preco, total=total)
+            print('ADICIONADO -------------------')
+            # Redirecionando o usuário para o carrinho.
+            return redirect('carrinho')  
+    else:
+        aux = []
+        carrinho = Carrinho.objects.get(usuario_id=request.user.id)
+        produtos_carrinho = ItemCarrinho.objects.filter(carrinho_id=carrinho.id)
+        
+        # Recuperando os produtos que estão dentro do carrinho do usuário
+        for produto in produtos_carrinho:
+            prod = Produto.objects.get(id=produto.produto)
+            aux.append({'produto': prod, 'quantidade': produto.quantidade})
+            
+        context = {
+            'carrinho': carrinho,
+            'produtos_carrinho': aux,
+        }
+        return render(request, 'carrinho.html', context)
     

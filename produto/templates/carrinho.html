@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+<link rel="stylesheet" href="{% static 'css/index.css' %}">
+<link rel="stylesheet" href="{% static 'css/carrinho.css' %}">
+
+    <h1>Total do seu carrinho: R$ {{ carrinho.total }}</h1>
+    <div class="cards">
+        {% for item in produtos_carrinho %}
+            <div class="card" onclick="produtoPage({{ item.produto.id }})">
+                <img src="{{ item.produto.imagem.url }}" alt="{{ item.produto.nome }}">
+                <p id="produto_nome">{{ item.produto.nome }}</p>
+                <p id="produto_preco">R$ {{ item.produto.preco }}</p>
+                <p>Quantidade: {{ item.quantidade }}</p>
+                <input type="hidden" name="produto_id" id="produto_id" value="{{ item.produto.id }}">
+            </div>
+        {% endfor %}
+    </div>
+
+{% endblock content %}

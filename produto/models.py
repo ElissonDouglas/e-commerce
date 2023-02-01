@@ -2,6 +2,7 @@ from django.db import models
 from django.contrib.auth.models import User
 from stdimage import StdImageField
 import uuid
+from decimal import Decimal
 
 
 def get_file_path(_instance, filename):
@@ -52,16 +53,16 @@ class Carrinho(Base):
     usuario = models.ForeignKey(User, on_delete=models.CASCADE)
     total = models.DecimalField('Total', max_digits=10, decimal_places=2, default=0.00)
     
-    def adicionar_produto(self, produto, quantidade, preco):
+    def adicionar_produto(self, produto, quantidade, preco, total):
         item = ItemCarrinho.objects.create(carrinho=self, produto=produto, quantidade=quantidade, preco=preco)
-        self.total += item.preco * quantidade
+        self.total += Decimal(total)
         self.save()
     
 
 
 class ItemCarrinho(models.Model):
     carrinho = models.ForeignKey(Carrinho, on_delete=models.CASCADE)
-    produto = models.ForeignKey(Produto, on_delete=models.CASCADE)
-    quantidade = models.PositiveIntegerField()
+    produto = models.IntegerField('produto_id', db_index=True)
+    quantidade = models.IntegerField()
     preco = models.DecimalField(max_digits=10, decimal_places=2)
     
