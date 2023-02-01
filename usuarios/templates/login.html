@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+<link rel="stylesheet" href="{% static 'css/form.css' %}">
+
+    <div class="container-cadastro">
+        {% if user.is_anonymous %}
+            <h1>Entre</h1>
+            <hr>
+            <form method="POST" action="{% url 'login' %}" id="form">
+                {% csrf_token %}
+                <label for="username">Usuário (será usado para login)</label>
+                <input type="text" name="username" id="username">
+
+                <label for="password">Senha</label>
+                <input type="password" name="password" id="password">
+
+                <button type="submit">Logar</button>
+            </form>
+        {% else %}
+            <h1>Você já está logado.</h1>
+            <a href="{% url 'index' %}">Voltar à página inicial.</a>
+        {% endif %}
+        
+    </div>
+{% endblock content %}

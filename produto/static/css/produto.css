@@ -38,4 +38,6 @@ p#frete {
     margin-bottom: 50px;
 }
 
-
+p#carrinho {
+    color: green;
+}

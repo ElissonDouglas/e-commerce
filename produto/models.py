@@ -47,3 +47,21 @@ class Produto(Base):
     def __str__(self) -> str:
         return self.nome
     
+
+class Carrinho(Base):
+    usuario = models.ForeignKey(User, on_delete=models.CASCADE)
+    total = models.DecimalField('Total', max_digits=10, decimal_places=2, default=0.00)
+    
+    def adicionar_produto(self, produto, quantidade, preco):
+        item = ItemCarrinho.objects.create(carrinho=self, produto=produto, quantidade=quantidade, preco=preco)
+        self.total += item.preco * quantidade
+        self.save()
+    
+
+
+class ItemCarrinho(models.Model):
+    carrinho = models.ForeignKey(Carrinho, on_delete=models.CASCADE)
+    produto = models.ForeignKey(Produto, on_delete=models.CASCADE)
+    quantidade = models.PositiveIntegerField()
+    preco = models.DecimalField(max_digits=10, decimal_places=2)
+    

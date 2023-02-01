@@ -26,10 +26,10 @@
 
             <div id="second">
                 {% if user.is_anonymous %}
-                    <button>Entrar</button>
-                    <button>Registrar-se</button>
+                    <button onclick="logar()">Entrar</button>
+                    <button onclick="registrar()">Registrar-se</button>
                 {% else %}
-                    <button>Sair</button>
+                    <button onclick="sair()">Sair</button>
                 {% endif %}
             </div>
         </div>
