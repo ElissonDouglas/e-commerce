@@ -70,3 +70,24 @@
     height: 350px;
     width: 900px;
 }
+
+@media screen and (max-width: 768px) {
+    .carrossel, .container-slide, .container-slide img {
+        width: 425px;
+        height: 150px;
+    }
+
+    .cards {
+        overflow-x: scroll;
+    }
+    
+    .card {
+        width: 170px;
+        gap: 0.1em;
+    }
+
+    .card img {
+        width: 170px;
+    }
+
+}

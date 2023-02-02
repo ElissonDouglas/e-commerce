@@ -9,11 +9,16 @@ html, body {
     background-color: rgb(238, 237, 237);
     width: 100vw;
     height: 100vh;
+    overflow-x: hidden;
 }
 
 header {
     background-color: #1676f3;
     padding: 10px;
+}
+
+section {
+    min-height: 800px;
 }
 
 .div-main {
@@ -73,3 +78,4 @@ footer {
     margin-top: 20px;
     background-color: #1676f3;
 }
+

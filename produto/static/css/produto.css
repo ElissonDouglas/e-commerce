@@ -33,6 +33,10 @@ p#frete {
     text-align: center;
 }
 
+.cards {
+    flex-wrap: wrap;
+}
+
 .card {
     margin-top: 50px;
     margin-bottom: 50px;
@@ -40,4 +44,27 @@ p#frete {
 
 p#carrinho {
     color: green;
+}
+
+input[type="number"] {
+    width: 50px;
+}
+
+@media screen and (max-width: 768px) {
+    .container {
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        width: 300px;
+        height: auto;
+    }
+
+    .card {
+        margin: 0;
+    }
+
+    .container img {
+        width: 200px;
+        height: 250px;
+    }
 }

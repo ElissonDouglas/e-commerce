@@ -1,0 +1,11 @@
+.cards {
+    flex-wrap: wrap;
+}
+
+.card {
+    width: 150px;
+}
+
+.card img {
+    width: 150px;
+}

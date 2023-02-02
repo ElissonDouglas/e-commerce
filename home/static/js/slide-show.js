@@ -10,9 +10,13 @@ function carrossel() {
     if (idx > img.length - 1) {
         idx = 0;
     }
-
-    imgs.style.transform = `translateX(${-idx * 900}px)`;
+    if (window.innerWidth <= 768) {
+        imgs.style.transform = `translateX(${-idx * 383}px)`;
+    } else {
+        imgs.style.transform = `translateX(${-idx * 900}px)`;
+    }
+    
 }
 
 
-setInterval(carrossel, 2000);
+setInterval(carrossel, 1300);
