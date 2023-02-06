@@ -11,7 +11,8 @@
 * Python: 3.10.6
 * Django Framework: 4.1.5
 * MySQL: 8.0.31
-
+* HTML5
+* CSS3
 ***
 
 ## Instalação
