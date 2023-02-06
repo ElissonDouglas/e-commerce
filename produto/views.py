@@ -28,8 +28,6 @@ class SearchView(TemplateView):
         
         produtos_pesquisa = Produto.objects.filter(nome__icontains=pesquisa)
         
-        
-        
         context = {
             'pesquisa': pesquisa,
             'produtos_pesquisa': produtos_pesquisa
@@ -53,16 +51,14 @@ def carrinhoview(request):
         quantidade = int(request.POST.get('quantidade'))
         preco = Decimal(request.POST.get('produto_preco').replace(',', '.'))
         total = Decimal(float(preco)) * quantidade
+        carrinho, created = Carrinho.objects.get_or_create(usuario=user)
         
-        print(produto)
         
         try:
-            item = ItemCarrinho.objects.get(produto=produto)
+            item = ItemCarrinho.objects.get(produto=produto, carrinho_id=carrinho.id)
             return redirect('carrinho')
         except ItemCarrinho.DoesNotExist:
-            # Criando carrinho/Acessando carrinho existente e adicionando o produto.
-            carrinho, created = Carrinho.objects.get_or_create(usuario=user)
-        
+            
             carrinho.adicionar_produto(produto=produto, quantidade=quantidade, preco=preco, total=Decimal(total))
             
             # Redirecionando o usuário para o carrinho.
@@ -76,7 +72,7 @@ def carrinhoview(request):
             for produto in produtos_carrinho:
                 prod = Produto.objects.get(id=produto.produto)
                 aux.append({'produto': prod, 'quantidade': produto.quantidade})
-                
+            
             context = {
             'carrinho': carrinho,
             'produtos_carrinho': aux,
@@ -85,10 +81,6 @@ def carrinhoview(request):
             
         except Carrinho.DoesNotExist:
             Carrinho.objects.create(usuario=request.user)
-        
-        # Recuperando os produtos que estão dentro do carrinho do usuário
-        
-            
         
         return render(request, 'carrinho.html')
             

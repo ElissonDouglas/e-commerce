@@ -13,4 +13,4 @@ omit =
     */migrations/*
     */tests/*
     */tests2/*
-    
+    */teste.py

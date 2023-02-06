@@ -55,8 +55,8 @@ class Carrinho(Base):
     
     def adicionar_produto(self, produto, quantidade, preco, total):
         item = ItemCarrinho.objects.create(carrinho=self, produto=produto, quantidade=quantidade, preco=preco)
-        self.total = self.total + total
-        print(type(self.total))
+        self.total += total
+        
         self.save()
     
 

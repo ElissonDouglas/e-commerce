@@ -1,0 +1,15 @@
+__pycache__
+
+*.*~
+
+*.pyc
+
+.env
+
+.idea
+
+template/*
+
+htmlcov/*
+
+teste.py

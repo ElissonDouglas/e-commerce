@@ -3,9 +3,6 @@ from django.views.generic import TemplateView
 from produto.models import Produto, CategoriaProduto
 
 
-
-
-
 class IndexView(TemplateView):
     template_name = 'index.html'
 
@@ -19,7 +16,6 @@ class IndexView(TemplateView):
         
         return context
     
-
 
 class Error404View(TemplateView):
     template_name = '404.html'
