@@ -1,46 +1,36 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import redirect
+from django.urls import reverse_lazy
 from django.contrib.auth.models import User
-from django.contrib.auth import authenticate, login, logout
-from django.contrib import messages
+from django.contrib.auth.views import LoginView
+from django.views.generic import FormView
+from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth import login
 
 
-def register(request):
-    if request.method == 'POST':
-        username = request.POST.get('username')
-        first_name = request.POST.get('first_name')
-        last_name = request.POST.get('last_name')
-        email = request.POST.get('email')
-        password = request.POST.get('password')
+class RegisterForm(FormView):
+    template_name = 'cadastro.html'
+    form_class = UserCreationForm
+    redirect_authenticated_user = True
+    success_url = reverse_lazy('index')
     
-        try: # Checando se o usuário existe no banco de dados
-            user = User.objects.get(username=username)
-            messages.error(request, 'Usuário já está sendo utilizado.')
-            return render(request, 'cadastro.html', {})
-        except User.DoesNotExist: # Adicionando o usuário ao banco de dados.
-            new_user = User.objects.create_user(username=username, email=email, password=password, last_name=last_name, first_name=first_name)
-            
-            return redirect('login')
-    else:
-        return render(request, 'cadastro.html')
+    def form_valid(self, form):
+        user = form.save()
+        if user is not None:
+            login(self.request, user)
+        return super(RegisterForm, self).form_valid(form)
     
-
-def loginview(request):
-    if request.method == 'POST':
-        username = request.POST.get('username')
-        password = request.POST.get('password')
-
-        user = authenticate(request, username=username, password=password)
-        
-        if user is not None: # Checando se as credenciais estão certas e autenticando o usuário.
-            login(request, user)
+    def get(self, *args, **kwargs):
+        if self.request.user.is_authenticated:
             return redirect('index')
-        else:
-            messages.error(request, 'Usuário ou senha inválidos.')
-            return render(request, 'login.html')
-    else:
-        return render(request, 'login.html')
+        return super(RegisterForm, self).get(*args, **kwargs)
+    
+
+class CustomLogin(LoginView):
+    template_name = 'login.html'
+    fields = '__all__'
+    redirect_authenticated_user = True
+    
+    def get_success_url(self):
+        return reverse_lazy('index')
     
     
-def logoutview(request):
-    logout(request)
-    return redirect('login')

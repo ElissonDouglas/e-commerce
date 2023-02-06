@@ -1,4 +1,4 @@
-from .views import IndexView, ProdutoView, Error404View
+from .views import IndexView, Error404View
 from django.urls import path, include
 
 from django.conf.urls.static import static

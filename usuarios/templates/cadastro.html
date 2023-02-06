@@ -4,34 +4,18 @@
 <link rel="stylesheet" href="{% static 'css/form.css' %}">
 
     <div class="container-cadastro">
-        {% if user.is_anonymous %}
-            <h1>Cadastre-se</h1>
-            <hr>
-            <form method="post" action="{% url 'cadastro' %}" id="form">
-                {% csrf_token %}
-                <label for="username">Usuário (será usado para login)</label>
-                <input type="text" name="username" id="username">
+        <form action="" method="post">
+            {% csrf_token %}
 
-                <label for="first_name">Nome</label>
-                <input type="text" name="first_name" id="first_name">
+            {{ form.as_p }}
+            <input type="submit" value="Cadastrar">
+        </form>
 
-                <label for="last_name">Sobrenome</label>
-                <input type="text" name="last_name" id="last_name">
-
-                <label for="email">Email</label>
-                <input type="email" name="email" id="email">
-
-                <label for="password">Senha</label>
-                <input type="password" name="password" id="password">
-
-                <button type="submit">Cadastrar</button>
-            </form>
-
-        {% else %}
-            <h1>Você deve sair da conta para se cadastrar</h1>
+        
+            <!--<h1>Você deve sair da conta para se cadastrar</h1>
             <a href="{% url 'index' %}">Voltar à página inicial.</a>
-            <a href="{% url 'logout' %}">Sair</a>
-        {% endif %}
+            <a href="{% url 'logout' %}">Sair</a>-->
+        
         
     </div>
 {% endblock content %}

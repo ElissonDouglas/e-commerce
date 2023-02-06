@@ -51,11 +51,12 @@ class Produto(Base):
 
 class Carrinho(Base):
     usuario = models.ForeignKey(User, on_delete=models.CASCADE)
-    total = models.DecimalField('Total', max_digits=10, decimal_places=2, default=0.00)
+    total = models.DecimalField('Total', max_digits=10, decimal_places=2, default=Decimal(0.00))
     
     def adicionar_produto(self, produto, quantidade, preco, total):
         item = ItemCarrinho.objects.create(carrinho=self, produto=produto, quantidade=quantidade, preco=preco)
-        self.total += Decimal(total)
+        self.total = self.total + total
+        print(type(self.total))
         self.save()
     
 

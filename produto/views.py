@@ -2,6 +2,7 @@ from django.views.generic import TemplateView
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, get_object_or_404, redirect
 from .models import Produto, CategoriaProduto, Carrinho, ItemCarrinho
+from django.contrib.auth.models import User
 
 
 from decimal import Decimal
@@ -26,8 +27,8 @@ class SearchView(TemplateView):
         pesquisa = request.GET.get('search-bar', '').strip()
         
         produtos_pesquisa = Produto.objects.filter(nome__icontains=pesquisa)
-        if len(produtos_pesquisa) == 0:
-            print('Sem produtos')
+        
+        
         
         context = {
             'pesquisa': pesquisa,
@@ -51,8 +52,9 @@ def carrinhoview(request):
         produto = int(request.POST.get('produto_carrinho'))
         quantidade = int(request.POST.get('quantidade'))
         preco = Decimal(request.POST.get('produto_preco').replace(',', '.'))
-        total = Decimal(preco * quantidade)
+        total = Decimal(float(preco)) * quantidade
         
+        print(produto)
         
         try:
             item = ItemCarrinho.objects.get(produto=produto)
@@ -61,25 +63,36 @@ def carrinhoview(request):
             # Criando carrinho/Acessando carrinho existente e adicionando o produto.
             carrinho, created = Carrinho.objects.get_or_create(usuario=user)
         
-            carrinho.adicionar_produto(produto=produto, quantidade=quantidade, preco=preco, total=total)
+            carrinho.adicionar_produto(produto=produto, quantidade=quantidade, preco=preco, total=Decimal(total))
             
             # Redirecionando o usuário para o carrinho.
             return redirect('carrinho')  
     else:
-        aux = []
-        carrinho = Carrinho.objects.get(usuario_id=request.user.id)
-        produtos_carrinho = ItemCarrinho.objects.filter(carrinho_id=carrinho.id)
-        
-        # Recuperando os produtos que estão dentro do carrinho do usuário
-        for produto in produtos_carrinho:
-            prod = Produto.objects.get(id=produto.produto)
-            aux.append({'produto': prod, 'quantidade': produto.quantidade})
-            
-        context = {
+        try:
+            user = User.objects.get(username=request.user)
+            carrinho = Carrinho.objects.get(usuario_id=user.id)
+            produtos_carrinho = ItemCarrinho.objects.filter(carrinho_id=carrinho.id)
+            aux = []
+            for produto in produtos_carrinho:
+                prod = Produto.objects.get(id=produto.produto)
+                aux.append({'produto': prod, 'quantidade': produto.quantidade})
+                
+            context = {
             'carrinho': carrinho,
             'produtos_carrinho': aux,
-        }
-        return render(request, 'carrinho.html', context)
+            }
+            return render(request, 'carrinho.html', context)
+            
+        except Carrinho.DoesNotExist:
+            Carrinho.objects.create(usuario=request.user)
+        
+        # Recuperando os produtos que estão dentro do carrinho do usuário
+        
+            
+        
+        return render(request, 'carrinho.html')
+            
+        
     
   
 def deleteitem(request, produto_id):

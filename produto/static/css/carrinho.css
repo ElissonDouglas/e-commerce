@@ -7,6 +7,14 @@ h1 {
     padding: 0 3rem;
 }
 
+.card {
+    height: auto;
+}
+
+.card p#produto_preco {
+    font-size: 1em;
+}
+
 a#delete-button {
     background-color: red;
     font-weight: bold;

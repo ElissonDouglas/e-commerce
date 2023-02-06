@@ -13,16 +13,14 @@ class IndexView(TemplateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         
-        context['informatica'] = Produto.objects.filter(categoria=1).order_by('?')
+        context['informatica'] = Produto.objects.filter(categoria=1).order_by('?')[:5]
+        context['eletrodomesticos'] = Produto.objects.filter(categoria=2).order_by('?')[:5]
         context['produtos'] = Produto.objects.order_by('-id').all()[:5]
         
         return context
     
 
-class ProdutoView(TemplateView):
-    template_name = 'produto.html'
-    
-    
+
 class Error404View(TemplateView):
     template_name = '404.html'
     

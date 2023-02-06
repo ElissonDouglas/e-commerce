@@ -43,6 +43,24 @@
             {% endfor %}
         </div>
     </div>
+
+    <div class="container">
+        <h1>Eletrodomésticos</h1>
+        <div class="cards">
+            {% for produto in eletrodomesticos %}
+                <div class="card" onclick="produtoPage({{ produto.id }})">
+                    <img src="{{ produto.imagem.url }}" alt="{{ produto.nome }}">
+                    <p id="produto_nome">{{ produto.nome }}</p>
+                    <p id="produto_preco">R$ {{ produto.preco }}</p>
+                    <p id="promocao">10x de R$ {{ produto.preco|div:10|sub:1 }} sem juros</p>
+                    <input type="hidden" name="produto_id" id="produto_id" value="{{ produto.id }}">
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+
+    
+    
 <script src="{% static 'js/redirect.js' %}"></script>
 <script src="{% static 'js/slide-show.js' %}"></script>
 {% endblock content %}

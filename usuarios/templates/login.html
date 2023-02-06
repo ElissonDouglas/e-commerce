@@ -4,23 +4,12 @@
 <link rel="stylesheet" href="{% static 'css/form.css' %}">
 
     <div class="container-cadastro">
-        {% if user.is_anonymous %}
-            <h1>Entre</h1>
-            <hr>
-            <form method="POST" action="{% url 'login' %}" id="form">
-                {% csrf_token %}
-                <label for="username">Usuário</label>
-                <input type="text" name="username" id="username">
-
-                <label for="password">Senha</label>
-                <input type="password" name="password" id="password">
-
-                <button type="submit">Logar</button>
-            </form>
-        {% else %}
-            <h1>Você já está logado.</h1>
-            <a href="{% url 'index' %}">Voltar à página inicial.</a>
-        {% endif %}
+        <form action="" method="post" id="custom">
+            {% csrf_token %}
+        
+            {{ form.as_p }}
+            <input type="submit" value="Entrar" id="large">
+        </form>
         
     </div>
 {% endblock content %}
