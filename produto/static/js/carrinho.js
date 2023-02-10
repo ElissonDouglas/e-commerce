@@ -1,7 +1,3 @@
-function disableButtons() {
-    let buttons = document.querySelectorAll('button#delete-button');
-    buttons.setAttribute('desabled', '');
-}
 
 const quantityProduct = document.getElementsByClassName('qtd-prod');
 
@@ -20,16 +16,14 @@ function updateTotalPage() {
         
         totalCart += (productPrice * productQuantity)
         updateItem(productId, productQuantity);
-    } console.log("total carrinho:" + totalCart)
+    }
 
     updateTotal(totalCart)
     
 
     totalCart = totalCart.toFixed(2)
     totalCart = totalCart.replace('.', ',')
-
     document.querySelector('.total-cart').innerText = "R$ " + totalCart
-    
 }
 
 

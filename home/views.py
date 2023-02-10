@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.views.generic import TemplateView
-from produto.models import Produto, CategoriaProduto
+from produto.models import Produto, CategoriaProduto, Carrinho, ItemCarrinho
 
 
 class IndexView(TemplateView):

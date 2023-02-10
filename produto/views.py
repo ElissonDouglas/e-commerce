@@ -80,6 +80,7 @@ def carrinhoview(request):
             context = {
                 'carrinho': carrinho,
                 'produtos_carrinho': aux,
+                'count': produtos_carrinho.count()
             }
             return render(request, 'carrinho.html', context)
 
@@ -119,3 +120,4 @@ def updatetotalcart(request):
         carrinho.total = total
         carrinho.save()
     return redirect('carrinho')
+

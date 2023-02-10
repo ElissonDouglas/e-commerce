@@ -2,7 +2,7 @@
     background-color: #1676f3;
     color: white;
     padding: 10px;
-    max-width: 500px;
+    max-width: 450px;
     margin: 100px auto;
     border-radius: 10px;
 
@@ -15,24 +15,26 @@ hr {
     width: 100%;
 }
 
-form {
+.container-cadastro form {
     display: flex;
     flex-direction: column;
     justify-content: center;
+    align-items: center;
     gap: 1em;
 }
 
-form p {
+.container-cadastro form p {
     font-weight: bold;
     display: flex;
     flex-direction: column;
+    justify-content: center;
     gap: 0.6em;
 }
 
-form input {
+.container-cadastro form input {
+    padding: 5px;
     border: none;
-    width: 90%;
-    font-size: 1.2em;
+    font-size: 1.1em;
     border-radius: 10px;
 }
 

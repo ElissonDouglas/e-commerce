@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+<link rel="stylesheet" href="{% static 'css/order.css' %}">
+    {% if produtos|length == 0 %}
+        <h1>Você não tem nenhum produto no carrinho</h1>
+    {% else %}
+        <h1>Finalizar Compra</h1>
+        <div class="container">
+            <div class="form-group">
+                <form action="" method="post">
+                    {% csrf_token %}
+                    {{ form.as_p }}
+                    <input type="submit" value="Finalizar">
+                </form>
+            </div>
+            <div class="produtos">
+                <table>
+                    <thead>
+                        <tr>
+                            <th></th>
+                            <th>Produto</th>
+                            <th>Valor unitário</th>
+                            <th>Quantidade</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                {% for item in produtos %}
+                        <tr>
+                            <td><img src="{{ item.produto.imagem.url }}" alt="{{ item.produto.nome }}" width="100px"></td>
+                            <td>{{ item.produto.nome }}</td>
+                            <td>R$ {{ item.produto.preco }}</td>
+                            <td>{{ item.quantidade }}</td>
+                        </tr>
+                {% endfor %}
+                        <tr>
+                            <td colspan="3"><strong>Total</strong></td>
+                            <td><strong>R$ {{ total }}</strong></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    {% endif %}
+
+    
+{% endblock content %}

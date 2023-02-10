@@ -1,3 +1,7 @@
+body {
+    text-align: center;
+}
+
 h1 {
     text-align: center;
 }
@@ -41,4 +45,9 @@ table td {
     border: 1px solid black;
     padding: 5px;
     text-align: center;
+}
+
+button#submit-order{
+    background-color: rgb(2, 189, 2);
+    
 }

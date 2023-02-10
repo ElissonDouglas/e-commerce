@@ -9,4 +9,4 @@ urlpatterns = [
     path('deleteitem/<produto_id>', deleteitem, name='deleteitem'),
     path('updateitem/', updateitemquantity, name='updateitem'),
     path('updatetotalcart/', updatetotalcart, name='updatetotalcart'),
-]
+]  

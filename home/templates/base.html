@@ -29,7 +29,7 @@
                     <button onclick="redirect('login')">Entrar</button>
                     <button onclick="redirect('cadastro')">Registrar-se</button>
                 {% else %}
-                    <button onclick="redirect('carrinho')"><i class="fa-solid fa-cart-shopping"></i> Meu carrinho</button>
+                    <button onclick="redirect('carrinho')"><i class="fa-solid fa-cart-shopping"></i>{{ itens }}Meu carrinho</button>
                     <button onclick="redirect('logout')">Sair</button>
                 {% endif %}
             </div>
