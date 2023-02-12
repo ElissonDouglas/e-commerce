@@ -39,8 +39,12 @@
 
 
 
-            <td><a href="{% url 'deleteitem' item.produto.id %}" id="delete-button" onclick="disableButtons()">Deletar
-                    produto</a></td>
+            <td>
+                <a id="delete-button" href="{% url 'deleteitem' item.produto.id %}">
+                    Excluir
+                    produto
+                </a>
+            </td>
         </tr>
         {% endfor %}
         <tr>

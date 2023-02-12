@@ -90,10 +90,9 @@ def carrinhoview(request):
         return render(request, 'carrinho.html')
 
 
-def deleteitem(request, produto_id):
+def deleteitem(request, pk):
     carrinho = Carrinho.objects.get(usuario=request.user.id)
-    item_carrinho = ItemCarrinho.objects.get(produto=produto_id, carrinho=carrinho)
-    
+    item_carrinho = ItemCarrinho.objects.get(produto=pk, carrinho=carrinho)
     carrinho.total -= item_carrinho.preco * item_carrinho.quantidade
     carrinho.save()
     item_carrinho.delete()

@@ -2,6 +2,14 @@ body {
     text-align: center;
 }
 
+h1#message {
+    margin: 50px auto;
+    background-color: rgb(65, 236, 22);
+    color: rgb(0, 66, 0);
+    width: 500px;
+    border-radius: 10px;
+}
+
 .container {
     display: flex;
     flex-direction: row;

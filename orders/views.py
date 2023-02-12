@@ -1,18 +1,22 @@
 from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
+from django.contrib import messages
 
 from produto.models import Produto, Carrinho, ItemCarrinho
-from .models import Pagamento
+from .models import Order
 from .forms import PagamentoForm
 
 
 @login_required
 def order(request):
+    carrinho = Carrinho.objects.get(usuario=request.user)
+    itens = ItemCarrinho.objects.filter(carrinho=carrinho)
     if request.method == 'POST':
         form = PagamentoForm(request.POST)
+        user = request.user
         
         if form.is_valid():
-            usuario = request.user
+            carrinho = Carrinho.objects.get(usuario=request.user)
             nome = form.cleaned_data['nome']
             email = form.cleaned_data['email']
             endereco = form.cleaned_data['endereco']
@@ -20,13 +24,18 @@ def order(request):
             estado = form.cleaned_data['estado']
             cep = form.cleaned_data['cep']
             
-            new_order = Pagamento(usuario=usuario, nome=nome, email=email, endereco=endereco, cidade=cidade, estado=estado, cep=cep)
+            new_order = Order(carrinho=carrinho, nome=nome, email=email, endereco=endereco, cidade=cidade, estado=estado, cep=cep)
             new_order.save()
+            
+            for i in itens:
+                produto = Produto.objects.get(id=i.produto)
+                quantidade = i.quantidade
+                preco = i.preco
+                new_order.get_order_items(produto=produto, quantidade=quantidade, order=new_order, preco=preco, total=quantidade*preco)
+            messages.success(request, 'Pedido realizado com sucesso!')
             
             return render(request, 'order.html')
     else:
-        carrinho = Carrinho.objects.get(usuario=request.user)
-        itens = ItemCarrinho.objects.filter(carrinho=carrinho)
         all_products = []
         for item in itens:
             produto = Produto.objects.get(id=item.produto)
